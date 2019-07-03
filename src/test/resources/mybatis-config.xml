@@ -3,10 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!-- 配置属性位置，也可以在property当中定义 -->
+    <!--
+    配置属性位置，也可以在property当中定义
+    如果属性在不只一个地方进行了配置，那么 MyBatis 将按照下面的顺序来加载：
+    要注意读取配置文件的优先级别
+    在 properties 元素体内指定的属性首先被读取。
+    然后根据 properties 元素中的 resource 属性读取类路径下属性文件或根据 url 属性指定的路径读取属性文件，
+    并覆盖已读取的同名属性。
+    最后读取作为方法参数传递的属性，并覆盖已读取的同名属性。
+    通过方法参数传递的属性具有最高优先级，resource/url 属性中指定的配置文件次之，最低优先级的是 properties 属性中指定的属性。
+    -->
     <properties resource="mybatis.properties">
         <property name="author" value="王凯"/>
+        <!-- 启用默认属性 -->
+        <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/> <!-- 启用默认值特性 -->
+        <property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/> <!-- 修改默认值的分隔符 -->
     </properties>
+    <!-- 类型别名是为 Java 类型设置一个短的名字。 它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余。例如： -->
+    <typeAliases>
+        <typeAlias alias="Blog" type="org.mybatis.example.Blog"/>
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>

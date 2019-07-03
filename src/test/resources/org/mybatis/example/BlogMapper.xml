@@ -7,4 +7,20 @@
     <select id="selectBlog" resultType="org.mybatis.example.Blog">
         select * from Blog where id = #{id}
     </select>
+
+    <!-- 测试调用存储过程 -->
+    <select id="selectByProcedure" statementType="CALLABLE" parameterType="map">
+  		call query_blog_by_id(#{id,mode=IN,jdbcType=INTEGER},#{name,mode=OUT,jdbcType=VARCHAR})
+    </select>
+
+    <!-- statementType默认为PREPARED -->
+    <select id="selectByName" statementType="PREPARED" resultType="Blog">
+        select id, name
+          from wangkai.blog
+        <where>
+            <if test="name != null">
+                name = #{name}
+            </if>
+        </where>
+    </select>
 </mapper>
